@@ -42,8 +42,6 @@ public class SyndImageImpl implements Serializable, SyndImage {
 
     private String title;
     private String url;
-    private Integer width;
-    private Integer height;
     private String link;
     private String description;
 
@@ -52,8 +50,6 @@ public class SyndImageImpl implements Serializable, SyndImage {
         basePropInterfaceMap.put("title", String.class);
         basePropInterfaceMap.put("url", String.class);
         basePropInterfaceMap.put("link", String.class);
-        basePropInterfaceMap.put("width", Integer.class);
-        basePropInterfaceMap.put("height", Integer.class);
         basePropInterfaceMap.put("description", String.class);
 
         final Map<Class<? extends CopyFrom>, Class<?>> basePropClassImplMap = Collections.<Class<? extends CopyFrom>, Class<?>> emptyMap();
@@ -147,7 +143,6 @@ public class SyndImageImpl implements Serializable, SyndImage {
         this.title = title;
     }
 
-
     /**
      * Returns the image URL.
      * <p>
@@ -170,54 +165,6 @@ public class SyndImageImpl implements Serializable, SyndImage {
     @Override
     public void setUrl(final String url) {
         this.url = url;
-    }
-
-    /**
-     * Returns the image width.
-     * <p>
-     *
-     * @return the image width, <b>null</b> if none.
-     *
-     */
-    @Override
-    public Integer getWidth() {
-        return width;
-    }
-
-    /**
-     * Sets the image width.
-     * <p>
-     *
-     * @param width the image width to set, <b>null</b> if none.
-     *
-     */
-    @Override
-    public void setWidth(Integer width) {
-        this.width = width;
-    }
-
-    /**
-     * Returns the image height.
-     * <p>
-     *
-     * @return the image height, <b>null</b> if none.
-     *
-     */
-    @Override
-    public Integer getHeight() {
-        return height;
-    }
-
-    /**
-     * Sets the image height.
-     * <p>
-     *
-     * @param height the image height to set, <b>null</b> if none.
-     *
-     */
-    @Override
-    public void setHeight(Integer height) {
-        this.height = height;
     }
 
     /**

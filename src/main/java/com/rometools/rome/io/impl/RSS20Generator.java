@@ -62,8 +62,6 @@ public class RSS20Generator extends RSS094Generator {
             eChannel.addContent(generateCategoryElement(category));
         }
 
-        generateForeignMarkup(eChannel, channel.getForeignMarkup());
-
     }
 
     @Override
