@@ -100,7 +100,7 @@ public class WireFeedOutput {
      *
      */
     public String outputString(final WireFeed feed) throws IllegalArgumentException, FeedException {
-        return this.outputString(feed, true);
+        return this.outputString(feed, true, false);
     }
 
     /**
@@ -122,8 +122,8 @@ public class WireFeedOutput {
      * @throws FeedException thrown if the XML representation for the feed could not be created.
      *
      */
-    public String outputString(final WireFeed feed, final boolean prettyPrint) throws IllegalArgumentException, FeedException {
-        final Document doc = outputJDom(feed);
+    public String outputString(final WireFeed feed, final boolean prettyPrint, final boolean ignoreOptionalErrors) throws IllegalArgumentException, FeedException {
+        final Document doc = outputJDom(feed, ignoreOptionalErrors);
         final String encoding = feed.getEncoding();
         Format format;
         if (prettyPrint) {
@@ -233,7 +233,7 @@ public class WireFeedOutput {
      *
      */
     public void output(final WireFeed feed, final Writer writer, final boolean prettyPrint) throws IllegalArgumentException, IOException, FeedException {
-        final Document doc = outputJDom(feed);
+        final Document doc = outputJDom(feed, false);
         final String encoding = feed.getEncoding();
         Format format;
         if (prettyPrint) {
@@ -265,7 +265,7 @@ public class WireFeedOutput {
      *
      */
     public org.w3c.dom.Document outputW3CDom(final WireFeed feed) throws IllegalArgumentException, FeedException {
-        final Document doc = outputJDom(feed);
+        final Document doc = outputJDom(feed, false);
         final DOMOutputter outputter = new DOMOutputter();
         try {
             return outputter.output(doc);
@@ -290,7 +290,7 @@ public class WireFeedOutput {
      * @throws FeedException thrown if the JDOM document for the feed could not be created.
      *
      */
-    public Document outputJDom(final WireFeed feed) throws IllegalArgumentException, FeedException {
+    public Document outputJDom(final WireFeed feed, final boolean ignoreOptionalErrors) throws IllegalArgumentException, FeedException {
         final String type = feed.getFeedType();
         final WireFeedGenerator generator = getFeedGenerators().getGenerator(type);
         if (generator == null) {
@@ -300,7 +300,7 @@ public class WireFeedOutput {
         if (!generator.getType().equals(type)) {
             throw new IllegalArgumentException("WireFeedOutput type[" + type + "] and WireFeed type [" + type + "] don't match");
         }
-        return generator.generate(feed);
+        return generator.generate(feed, ignoreOptionalErrors);
     }
 
 }

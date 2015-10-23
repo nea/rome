@@ -702,7 +702,7 @@ public class Atom10Parser extends BaseWireFeedParser {
         final Feed feed = new Feed();
         feed.setFeedType("atom_1.0");
         final WireFeedOutput wireFeedOutput = new WireFeedOutput();
-        final Document feedDoc = wireFeedOutput.outputJDom(feed);
+        final Document feedDoc = wireFeedOutput.outputJDom(feed, false);
         feedDoc.getRootElement().addContent(fetchedEntryElement);
 
         if (baseURI != null) {

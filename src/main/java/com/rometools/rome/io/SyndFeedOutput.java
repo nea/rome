@@ -72,7 +72,19 @@ public class SyndFeedOutput {
      *
      */
     public String outputString(final SyndFeed feed, final boolean prettyPrint) throws FeedException {
-        return feedOutput.outputString(feed.createWireFeed(), prettyPrint);
+        return feedOutput.outputString(feed.createWireFeed(), prettyPrint, false);
+    }
+    
+    /**
+     * 
+     * @param feed
+     * @param prettyPrint
+     * @param ignoreOptionalErrors
+     * @return
+     * @throws FeedException
+     */
+    public String outputString(final SyndFeed feed, final boolean prettyPrint, final boolean ignoreOptionalErrors) throws FeedException {
+        return feedOutput.outputString(feed.createWireFeed(), prettyPrint, ignoreOptionalErrors);
     }
 
     /**
@@ -184,7 +196,7 @@ public class SyndFeedOutput {
      *
      */
     public Document outputJDom(final SyndFeed feed) throws FeedException {
-        return feedOutput.outputJDom(feed.createWireFeed());
+        return feedOutput.outputJDom(feed.createWireFeed(), false);
     }
 
 }

@@ -69,14 +69,14 @@ public class RSS091UserlandGenerator extends RSS090Generator {
     }
 
     @Override
-    protected void addChannel(final Channel channel, final Element parent) throws FeedException {
+    protected void addChannel(final Channel channel, final Element parent, final boolean ignoreOptionalErrors) throws FeedException {
 
-        super.addChannel(channel, parent);
+        super.addChannel(channel, parent, ignoreOptionalErrors);
 
         final Element eChannel = parent.getChild("channel", getFeedNamespace());
 
-        addImage(channel, eChannel);
-        addTextInput(channel, eChannel);
+        addImage(channel, eChannel, ignoreOptionalErrors);
+        addTextInput(channel, eChannel, ignoreOptionalErrors);
         addItems(channel, eChannel);
 
     }
@@ -235,8 +235,8 @@ public class RSS091UserlandGenerator extends RSS090Generator {
     }
 
     @Override
-    protected void populateFeed(final Channel channel, final Element parent) throws FeedException {
-        addChannel(channel, parent);
+    protected void populateFeed(final Channel channel, final Element parent, final boolean ignoreOptionalErrors) throws FeedException {
+        addChannel(channel, parent, ignoreOptionalErrors);
     }
 
     @Override

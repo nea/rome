@@ -55,6 +55,6 @@ public interface WireFeedGenerator {
      * @throws FeedException thrown if the XML Document could not be created.
      *
      */
-    public Document generate(WireFeed feed) throws IllegalArgumentException, FeedException;
+    public Document generate(WireFeed feed, boolean ignoreOptionalErrors) throws IllegalArgumentException, FeedException;
 
 }

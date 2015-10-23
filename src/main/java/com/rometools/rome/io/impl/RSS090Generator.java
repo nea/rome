@@ -54,10 +54,10 @@ public class RSS090Generator extends BaseWireFeedGenerator {
     }
 
     @Override
-    public Document generate(final WireFeed feed) throws FeedException {
+    public Document generate(final WireFeed feed, final boolean ignoreOptionalErrors) throws FeedException {
         final Channel channel = (Channel) feed;
         final Element root = createRootElement(channel);
-        populateFeed(channel, root);
+        populateFeed(channel, root, ignoreOptionalErrors);
         purgeUnusedNamespaceDeclarations(root);
         return createDocument(root);
     }
@@ -87,15 +87,15 @@ public class RSS090Generator extends BaseWireFeedGenerator {
         return root;
     }
 
-    protected void populateFeed(final Channel channel, final Element parent) throws FeedException {
-        addChannel(channel, parent);
-        addImage(channel, parent);
-        addTextInput(channel, parent);
+    protected void populateFeed(final Channel channel, final Element parent, final boolean ignoreOptionalErrors) throws FeedException {
+        addChannel(channel, parent, ignoreOptionalErrors);
+        addImage(channel, parent, false);
+        addTextInput(channel, parent, false);
         addItems(channel, parent);
         generateForeignMarkup(parent, channel.getForeignMarkup());
     }
 
-    protected void addChannel(final Channel channel, final Element parent) throws FeedException {
+    protected void addChannel(final Channel channel, final Element parent, final boolean ignoreOptionalErrors) throws FeedException {
         final Element eChannel = new Element("channel", getFeedNamespace());
         populateChannel(channel, eChannel);
         checkChannelConstraints(eChannel);
@@ -147,12 +147,17 @@ public class RSS090Generator extends BaseWireFeedGenerator {
         }
     }
 
-    protected void addImage(final Channel channel, final Element parent) throws FeedException {
+    protected void addImage(final Channel channel, final Element parent, final boolean ignoreOptionalErrors) throws FeedException {
         final Image image = channel.getImage();
         if (image != null) {
             final Element eImage = new Element("image", getFeedNamespace());
             populateImage(image, eImage);
-            checkImageConstraints(eImage);
+            try {
+            	checkImageConstraints(eImage);	
+            } catch(FeedException fe) {
+            	if(!ignoreOptionalErrors) throw fe;
+            }
+            
             parent.addContent(eImage);
         }
     }
@@ -177,12 +182,16 @@ public class RSS090Generator extends BaseWireFeedGenerator {
         return "textInput";
     }
 
-    protected void addTextInput(final Channel channel, final Element parent) throws FeedException {
+    protected void addTextInput(final Channel channel, final Element parent, final boolean ignoreOptionalErrors) throws FeedException {
         final TextInput textInput = channel.getTextInput();
         if (textInput != null) {
             final Element eTextInput = new Element(getTextInputLabel(), getFeedNamespace());
             populateTextInput(textInput, eTextInput);
-            checkTextInputConstraints(eTextInput);
+            try {
+            	checkTextInputConstraints(eTextInput);	
+            } catch(FeedException fe) {
+            	if(!ignoreOptionalErrors) throw fe;
+            }            
             parent.addContent(eTextInput);
         }
     }

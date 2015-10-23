@@ -76,10 +76,10 @@ public class Atom10Generator extends BaseWireFeedGenerator {
     }
 
     @Override
-    public Document generate(final WireFeed wFeed) throws FeedException {
+    public Document generate(final WireFeed wFeed, final boolean ignoreOptionalErrors) throws FeedException {
         final Feed feed = (Feed) wFeed;
         final Element root = createRootElement(feed);
-        populateFeed(feed, root);
+        populateFeed(feed, root, ignoreOptionalErrors);
         purgeUnusedNamespaceDeclarations(root);
         return createDocument(root);
     }
@@ -108,7 +108,7 @@ public class Atom10Generator extends BaseWireFeedGenerator {
 
     }
 
-    protected void populateFeed(final Feed feed, final Element parent) throws FeedException {
+    protected void populateFeed(final Feed feed, final Element parent, final boolean ignoreOptionalErrors) throws FeedException {
         addFeed(feed, parent);
         addEntries(feed, parent);
     }
@@ -548,7 +548,7 @@ public class Atom10Generator extends BaseWireFeedGenerator {
 
         // Get Rome to output feed as a JDOM document
         final WireFeedOutput wireFeedOutput = new WireFeedOutput();
-        final Document feedDoc = wireFeedOutput.outputJDom(feed1);
+        final Document feedDoc = wireFeedOutput.outputJDom(feed1, false);
 
         // Grab entry element from feed and get JDOM to serialize it
         final Element entryElement = feedDoc.getRootElement().getChildren().get(0);

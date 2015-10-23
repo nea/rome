@@ -70,10 +70,10 @@ public class Atom03Generator extends BaseWireFeedGenerator {
     }
 
     @Override
-    public Document generate(final WireFeed wFeed) throws FeedException {
+    public Document generate(final WireFeed wFeed, final boolean ignoreOptionalErrors) throws FeedException {
         final Feed feed = (Feed) wFeed;
         final Element root = createRootElement(feed);
-        populateFeed(feed, root);
+        populateFeed(feed, root, ignoreOptionalErrors);
         purgeUnusedNamespaceDeclarations(root);
         return createDocument(root);
     }
@@ -91,7 +91,7 @@ public class Atom03Generator extends BaseWireFeedGenerator {
         return root;
     }
 
-    protected void populateFeed(final Feed feed, final Element parent) throws FeedException {
+    protected void populateFeed(final Feed feed, final Element parent, final boolean ignoreOptionalErrors) throws FeedException {
         addFeed(feed, parent);
         addEntries(feed, parent);
     }
